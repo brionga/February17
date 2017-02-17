@@ -12,8 +12,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.bluelily.wallpaper.myapplication1.HeavyLifter.FAIL;
-import static com.bluelily.wallpaper.myapplication1.HeavyLifter.SUCCESS;
+
 
 public class MainActivity extends Activity {
     /** A list containing the resource identifiers for all of our selectable backgrounds */
@@ -23,11 +22,7 @@ public class MainActivity extends Activity {
     /** Instantiate the list statically, so this will be done once on app load, also calculate the total number of backgrounds */
     static {
         backgrounds.add(R.drawable.background1);
-        backgrounds.add(R.drawable.background2);
-        backgrounds.add(R.drawable.background3);
-        backgrounds.add(R.drawable.roosid1);
-        backgrounds.add(R.drawable.seahorse);
-        backgrounds.add(R.drawable.lilled);
+
 
         // We -1 as lists are zero indexed (0-2 is a size of 3) - we'll mke use of this to implement a browsing loop
         TOTAL_IMAGES = (backgrounds.size() - 1);
@@ -38,9 +33,7 @@ public class MainActivity extends Activity {
     private int currentPosition = 0;
     /** our image wallpaper preview */
     private ImageView backgroundPreview;
-    /** A helper class that will do the heavy work of decoding images and actually setting the wallpaper */
-    private HeavyLifter chuckNorris;
-
+   
 
     /** Called when the activity is first created. */
     @Override
@@ -53,9 +46,7 @@ public class MainActivity extends Activity {
         // Set the default image to be shown to start with
         changePreviewImage(currentPosition);
 
-        // Load are heavy lifter (goes and does work on another thread), to get a response after the lifters thread
-        // has finished we pass in a Handler that will be notified when it completes
-        chuckNorris = new HeavyLifter(this, chuckFinishedHandler);
+        
     }
 
     /**
@@ -73,16 +64,10 @@ public class MainActivity extends Activity {
         changePreviewImage(positionToMoveTo);
     }
 
-    /**
-     * Called from XML when the set wallpaper button is pressed
-     * Thie retrieves the id of the current image from our list
-     * It then asks chuck to set it as a wallpaper!
-     * The chuckHandler will be called when this operation is complete
-     * @param v
-     */
+   
     public void setAsWallpaper(View v) {
         int resourceId = backgrounds.get(currentPosition);
-        chuckNorris.setResourceAsWallpaper(resourceId);
+        
     }
 
     /**
@@ -113,23 +98,6 @@ public class MainActivity extends Activity {
         Log.d("Main", "Current position: "+pos);
     }
 
-    /**
-     * This is the handler that is notified when are HeavyLifter is finished doing an operation
-     */
-    private Handler chuckFinishedHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            switch(msg.what){
-                case SUCCESS:
-                    Toast.makeText(MainActivity.this, "Wallpaper set", Toast.LENGTH_SHORT).show();
-                    break;
-                case FAIL:
-                    Toast.makeText(MainActivity.this, "Uh oh, can't do that right now", Toast.LENGTH_SHORT).show();
-                    break;
-                default:
-                    super.handleMessage(msg);
-            }
-        }
-    };
+    
 
 }

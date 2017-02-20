@@ -1,4 +1,4 @@
-package com.bluelily.wallpaper.myapplication1;
+package com.myapplication1;
 
 import android.app.Activity;
 import android.os.Bundle;
